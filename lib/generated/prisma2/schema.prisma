@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma2"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  phone        String?
+  agency       String?
+  leads        Lead[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Lead {
+  id           String   @id @default(uuid())
+  brokerId     String
+  broker       User     @relation(fields: [brokerId], references: [id])
+  name         String
+  contact      String
+  location     String
+  address      String?
+  requirements String
+  budget       String
+  status       String   @default("Dial-out") // Dial-out, Site Visit, Experience center Visit, Quotation shared
+  deal         String   @default("In-progress") // In-progress, Closed, Lost
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
