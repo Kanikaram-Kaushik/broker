@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const secretKey = process.env.JWT_SECRET;
+const secretKey = process.env.JWT_SECRET || 'supersecret_jwt_key_for_dev';
 const key = new TextEncoder().encode(secretKey);
 
 export default async function proxy(request: NextRequest) {

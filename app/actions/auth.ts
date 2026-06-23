@@ -27,14 +27,19 @@ export async function registerUser(formData: FormData) {
 
   const passwordHash = await bcrypt.hash(password, 10);
 
-  const user = await prisma.user.create({
-    data: {
-      name,
-      email,
-      phone,
-      passwordHash,
-    },
-  });
+  let user;
+  try {
+    user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        phone,
+        passwordHash,
+      },
+    });
+  } catch (error: any) {
+    redirect(`/register?error=Database+Error:+${encodeURIComponent(error.message)}`);
+  }
 
   const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
   const session = await encrypt({ 
