@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node clean.js && next build",
+    "build": "node clean.js && npx prisma generate && next build",
     "start": "next start",
     "lint": "eslint"
   },
