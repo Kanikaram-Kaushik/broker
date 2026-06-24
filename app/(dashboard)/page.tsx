@@ -12,18 +12,12 @@ export default async function Home() {
   const payload = await decrypt(session);
   const brokerId = payload.user.id as string;
 
-  // Fetch metrics
-  const [totalLeads, siteVisits, activeDeals, closedDeals, recentActivity] = await Promise.all([
-    prisma.lead.count({ where: { brokerId } }),
-    prisma.lead.count({ where: { brokerId, status: "Site Visit" } }),
-    prisma.lead.count({ where: { brokerId, deal: "In-progress" } }),
-    prisma.lead.count({ where: { brokerId, deal: "Closed" } }),
-    prisma.lead.findMany({
-      where: { brokerId },
-      orderBy: { updatedAt: 'desc' },
-      take: 5
-    })
-  ]);
+  // Mock metrics for Vercel demo
+  const totalLeads = 0;
+  const siteVisits = 0;
+  const activeDeals = 0;
+  const closedDeals = 0;
+  const recentActivity: any[] = [];
 
   return (
     <div className={styles.dashboard}>

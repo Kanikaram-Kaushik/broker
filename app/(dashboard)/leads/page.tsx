@@ -12,10 +12,7 @@ export default async function LeadsPage() {
   const payload = await decrypt(session);
   const brokerId = payload.user.id as string;
 
-  const leads = await prisma.lead.findMany({
-    where: { brokerId },
-    orderBy: { createdAt: 'desc' }
-  });
+  const leads: any[] = [];
 
   return <LeadsClient initialLeads={leads} />;
 }
